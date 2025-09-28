@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { 
   User, 
@@ -23,6 +24,9 @@ export default function MyProfileView({ initialProfile }) {
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState("");
+  
+  // Check if this is a new user (no industry set)
+  const isNewUser = !profile?.industry;
 
   const handleSave = async () => {
     setIsSaving(true);
@@ -49,6 +53,25 @@ export default function MyProfileView({ initialProfile }) {
 
   return (
     <div className="space-y-6">
+      {/* Welcome Banner for New Users */}
+      {isNewUser && (
+        <Card className="border-blue-200 bg-blue-50 dark:bg-blue-950 dark:border-blue-800">
+          <CardContent className="pt-6">
+            <div className="flex items-center gap-3">
+              <div className="h-8 w-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                <User className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-blue-900 dark:text-blue-100">Welcome to Skillmap!</h3>
+                <p className="text-sm text-blue-700 dark:text-blue-300">
+                  Complete your profile to get personalized learning roadmaps, industry insights, and mock interviews tailored to your field.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Profile Header */}
       <Card>
         <CardHeader>
@@ -162,16 +185,40 @@ export default function MyProfileView({ initialProfile }) {
               <Briefcase className="h-5 w-5" />
               Professional Information
             </CardTitle>
+            <CardDescription>
+              Your industry information helps personalize mock interviews and learning recommendations
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
               <label className="text-sm font-medium text-muted-foreground">Industry</label>
               {isEditing ? (
-                <Input
+                <Select
                   value={profile?.industry || ""}
-                  onChange={(e) => setProfile({ ...profile, industry: e.target.value })}
-                  placeholder="e.g., Technology, Healthcare, Finance"
-                />
+                  onValueChange={(value) => setProfile({ ...profile, industry: value })}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your industry" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Technology">Technology</SelectItem>
+                    <SelectItem value="Healthcare">Healthcare</SelectItem>
+                    <SelectItem value="Finance">Finance</SelectItem>
+                    <SelectItem value="Education">Education</SelectItem>
+                    <SelectItem value="Marketing">Marketing</SelectItem>
+                    <SelectItem value="Sales">Sales</SelectItem>
+                    <SelectItem value="Design">Design</SelectItem>
+                    <SelectItem value="Engineering">Engineering</SelectItem>
+                    <SelectItem value="Consulting">Consulting</SelectItem>
+                    <SelectItem value="Manufacturing">Manufacturing</SelectItem>
+                    <SelectItem value="Retail">Retail</SelectItem>
+                    <SelectItem value="Real Estate">Real Estate</SelectItem>
+                    <SelectItem value="Media">Media</SelectItem>
+                    <SelectItem value="Government">Government</SelectItem>
+                    <SelectItem value="Non-profit">Non-profit</SelectItem>
+                    <SelectItem value="Other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
               ) : (
                 <p className="text-lg">{profile?.industry || "Not specified"}</p>
               )}
