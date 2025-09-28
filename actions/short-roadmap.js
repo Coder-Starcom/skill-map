@@ -1,7 +1,6 @@
 "use server";
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { rateLimitedApiCall } from "@/lib/rate-limiter";
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 
@@ -22,7 +21,9 @@ export async function generateShortRoadmap(skill, experienceLevel = "beginner") 
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     
     const prompt = `
-    Create a learning roadmap for "${skill}" (${experienceLevel} level) with 30-35 steps.
+    Create a comprehensive learning roadmap for "${skill}" suitable for ${experienceLevel} level.
+    
+    Generate 30-40 practical, sequential steps that build upon each other.
     
     Return JSON format:
     {
@@ -48,10 +49,11 @@ export async function generateShortRoadmap(skill, experienceLevel = "beginner") 
       ]
     }
     
-    Keep it practical and focused on ${skill}. Use reliable resources only.
+    Make each step actionable and include diverse learning resources (articles, documentation, tools, books, practice exercises).
+    Avoid video links as they are often unavailable.
     `;
 
-    console.log("🚀 Making API call to Gemini...");
+    console.log("🚀 Making API call to Gemini (no restrictions)...");
     const result = await model.generateContent(prompt);
     
     console.log("✅ API call successful, parsing response...");

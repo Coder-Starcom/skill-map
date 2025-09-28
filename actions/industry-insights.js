@@ -1,7 +1,6 @@
 "use server";
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { rateLimitedApiCall } from "@/lib/rate-limiter";
 import { db } from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
 
