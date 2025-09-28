@@ -7,6 +7,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Roadmap {
+  id        String   @id @default(cuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  title     String
+  content   Json
+  createdAt DateTime @default(now())
+
+  @@unique([userId, title])
+}
+
 model User {
   id            String    @id @default(uuid())
   clerkUserId   String    @unique // clerk user id
@@ -27,6 +38,10 @@ model User {
   assessments   Assessment[]
   resume        Resume?
   coverLetter   CoverLetter[]
+  roadmaps      Roadmap[]
+  userIndustryInsights UserIndustryInsight[]
+  roadmapProgress      UserRoadmapProgress[]
+  roadmapCompletions   UserRoadmapCompletion[]
 }
 
 model Assessment {
@@ -96,4 +111,49 @@ model IndustryInsight {
   nextUpdate    DateTime  // Scheduled update time
 
   @@index([industry])
+}
+
+model UserIndustryInsight {
+  id          String   @id @default(cuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  industry    String
+  title       String
+  content     Json     // Structured insights data
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+  @@index([industry])
+}
+
+model UserRoadmapProgress {
+  id          String   @id @default(cuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  roadmapId   String   // Reference to the roadmap
+  roadmapName String   // Name of the roadmap
+  currentStep Int      @default(0) // Current step index
+  completedSteps Json  // Array of completed step IDs
+  lastAccessed DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, roadmapId])
+  @@index([userId])
+  @@index([roadmapId])
+}
+
+model UserRoadmapCompletion {
+  id          String   @id @default(cuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  roadmapId   String   // Reference to the roadmap
+  roadmapName String   // Name of the completed roadmap
+  completedAt DateTime @default(now())
+  badgeUrl    String?  // URL to the completion badge
+  badgeName   String   // Name of the completion badge
+
+  @@index([userId])
+  @@index([roadmapId])
 }

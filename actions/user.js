@@ -5,6 +5,60 @@ import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { generateAIInsights } from "./dashboard";
 
+export async function getUserProfile() {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+
+  const user = await db.user.findUnique({
+    where: { clerkUserId: userId },
+  });
+
+  if (!user) throw new Error("User not found");
+
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    industry: user.industry,
+    experience: user.experience,
+    bio: user.bio,
+    skills: user.skills,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt
+  };
+}
+
+export async function updateUserProfile(data) {
+  const { userId } = await auth();
+  if (!userId) throw new Error("Unauthorized");
+
+  const user = await db.user.findUnique({
+    where: { clerkUserId: userId },
+  });
+
+  if (!user) throw new Error("User not found");
+
+  try {
+    const updatedUser = await db.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        name: data.name,
+        industry: data.industry,
+        experience: data.experience,
+        bio: data.bio,
+      },
+    });
+
+    revalidatePath("/my-profile");
+    return updatedUser;
+  } catch (error) {
+    console.error("Error updating user profile:", error);
+    throw new Error("Failed to update profile");
+  }
+}
+
 export async function updateUser(data) {
   const { userId } = await auth();
   if (!userId) throw new Error("Unauthorized");
