@@ -21,7 +21,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Image from "next/image";
 import { checkUser } from "@/lib/checkUser";
 
 export default async function Header() {
@@ -31,11 +30,9 @@ export default async function Header() {
     <header className="fixed top-0 w-full border-b bg-background/80 backdrop-blur-md z-50 supports-[backdrop-filter]:bg-background/60">
       <nav className="container mx-auto px-4 h-32 flex items-center justify-between">
         <Link href="/">
-          <Image
+          <img
             src={"/logo.png"}
-            alt="Sensai Logo"
-            width={1000}
-            height={300}
+            alt="Skillmap Logo"
             className="h-64 py-1 w-auto object-contain"
           />
         </Link>
