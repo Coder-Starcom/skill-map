@@ -124,15 +124,15 @@ export async function generateIndustryInsights(industry) {
   } catch (error) {
     console.error("Error generating industry insights:", error);
     
-    // Provide more specific error messages
+    // Log specific error types but still return fallback data
     if (error.message.includes("API call timeout")) {
-      throw new Error("Industry insights generation timed out. Please try again.");
+      console.log("Industry insights generation timed out, using fallback data");
     } else if (error.message.includes("API key")) {
-      throw new Error("Gemini API key is invalid or expired. Please check your environment variables.");
+      console.log("API key issue, using fallback data");
     } else if (error.message.includes("quota")) {
-      throw new Error("API quota exceeded. Please try again later.");
+      console.log("API quota exceeded, using fallback data");
     } else if (error.message.includes("network")) {
-      throw new Error("Network error. Please check your internet connection and try again.");
+      console.log("Network error, using fallback data");
     }
     
     // Fallback insights data
