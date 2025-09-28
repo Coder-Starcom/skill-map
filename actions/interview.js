@@ -132,6 +132,71 @@ function getFallbackQuestions(industry, skills) {
     ];
   }
   
+  if (industryLower.includes('video') || industryLower.includes('editing') || industryLower.includes('media') || industryLower.includes('film') || industryLower.includes('content')) {
+    return [
+      {
+        question: "What is the difference between 1080p and 4K video resolution?",
+        options: ["1080p has more pixels", "4K has 4 times more pixels than 1080p", "They are the same", "1080p is better quality"],
+        correctAnswer: "4K has 4 times more pixels than 1080p",
+        explanation: "4K resolution (3840x2160) has approximately 4 times more pixels than 1080p (1920x1080), providing much higher detail."
+      },
+      {
+        question: "What does 'color grading' mean in video editing?",
+        options: ["Adding colors to video", "Adjusting color temperature, contrast, and saturation", "Converting to black and white", "Adding text overlays"],
+        correctAnswer: "Adjusting color temperature, contrast, and saturation",
+        explanation: "Color grading involves adjusting color temperature, contrast, saturation, and other color properties to achieve the desired look."
+      },
+      {
+        question: "What is the purpose of a timeline in video editing software?",
+        options: ["To show file sizes", "To organize and arrange video clips in sequence", "To display file names", "To show file locations"],
+        correctAnswer: "To organize and arrange video clips in sequence",
+        explanation: "The timeline allows editors to arrange video clips, audio, and effects in chronological order to create the final video."
+      },
+      {
+        question: "What does 'rendering' mean in video editing?",
+        options: ["Deleting files", "Converting edited video into final output file", "Adding effects", "Organizing clips"],
+        correctAnswer: "Converting edited video into final output file",
+        explanation: "Rendering is the process of processing and converting the edited video project into a final playable video file."
+      },
+      {
+        question: "What is the difference between a cut and a transition in video editing?",
+        options: ["They are the same", "A cut is instant, a transition has an effect", "A transition is instant, a cut has an effect", "Cuts are only for audio"],
+        correctAnswer: "A cut is instant, a transition has an effect",
+        explanation: "A cut is an instant change between clips, while a transition includes visual effects like fade, dissolve, or wipe between clips."
+      },
+      {
+        question: "What does 'keyframe' mean in video editing?",
+        options: ["A type of video format", "A frame that marks the beginning or end of a change", "A frame with text", "A frame with audio"],
+        correctAnswer: "A frame that marks the beginning or end of a change",
+        explanation: "A keyframe marks the beginning or end of a change in properties like position, scale, or opacity over time."
+      },
+      {
+        question: "What is the purpose of proxy files in video editing?",
+        options: ["To store passwords", "To create lower resolution copies for smoother editing", "To add effects", "To organize files"],
+        correctAnswer: "To create lower resolution copies for smoother editing",
+        explanation: "Proxy files are lower resolution copies of original footage used for smoother editing, then replaced with originals during final export."
+      },
+      {
+        question: "What does 'bitrate' refer to in video?",
+        options: ["File size", "Amount of data processed per second", "Video length", "Number of frames"],
+        correctAnswer: "Amount of data processed per second",
+        explanation: "Bitrate refers to the amount of data processed per second, affecting video quality and file size."
+      },
+      {
+        question: "What is the difference between lossy and lossless video compression?",
+        options: ["Lossy is better quality", "Lossless preserves all original data, lossy removes some data", "They are the same", "Lossless is faster"],
+        correctAnswer: "Lossless preserves all original data, lossy removes some data",
+        explanation: "Lossless compression preserves all original data, while lossy compression removes some data to reduce file size."
+      },
+      {
+        question: "What does 'chroma key' refer to in video editing?",
+        options: ["Color correction", "Green screen technique for removing backgrounds", "Adding colors", "Video format"],
+        correctAnswer: "Green screen technique for removing backgrounds",
+        explanation: "Chroma key (green screen) is a technique used to remove a specific color background and replace it with another image or video."
+      }
+    ];
+  }
+  
   if (industryLower.includes('healthcare') || industryLower.includes('medical')) {
     return [
       {

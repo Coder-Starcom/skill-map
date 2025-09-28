@@ -49,6 +49,28 @@ export async function generateStepQuiz(stepTitle, stepDescription, stepContent) 
   } catch (error) {
     console.error("Error generating step quiz:", error);
     
+    // Check if this is video editing related content
+    const contentLower = (stepTitle + stepDescription + stepContent).toLowerCase();
+    const isVideoEditing = contentLower.includes('video') || contentLower.includes('editing') || contentLower.includes('film') || contentLower.includes('media') || contentLower.includes('color') || contentLower.includes('timeline');
+    
+    if (isVideoEditing) {
+      return {
+        questions: [
+          {
+            question: "What is the primary purpose of color grading in video editing?",
+            options: [
+              "To add text overlays",
+              "To adjust color temperature and contrast for desired look",
+              "To compress video files",
+              "To add audio tracks"
+            ],
+            correct: 1,
+            explanation: "Color grading involves adjusting color temperature, contrast, and saturation to achieve the desired visual look and mood."
+          }
+        ]
+      };
+    }
+    
     // Return a fallback quiz instead of throwing
     return {
       questions: [

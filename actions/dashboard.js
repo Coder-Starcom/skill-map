@@ -38,6 +38,28 @@ export const generateAIInsights = async (industry) => {
   } catch (error) {
     console.error("Error generating AI insights:", error);
     
+    // Check if this is video editing industry
+    const industryLower = industry?.toLowerCase() || '';
+    const isVideoEditing = industryLower.includes('video') || industryLower.includes('editing') || industryLower.includes('media') || industryLower.includes('film') || industryLower.includes('content');
+    
+    if (isVideoEditing) {
+      return {
+        salaryRanges: [
+          { "role": "Video Editor", "min": 35000, "max": 55000, "median": 45000, "location": "US" },
+          { "role": "Senior Video Editor", "min": 55000, "max": 80000, "median": 67500, "location": "US" },
+          { "role": "Motion Graphics Designer", "min": 50000, "max": 75000, "median": 62500, "location": "US" },
+          { "role": "Video Producer", "min": 60000, "max": 90000, "median": 75000, "location": "US" },
+          { "role": "Creative Director", "min": 80000, "max": 120000, "median": 100000, "location": "US" }
+        ],
+        growthRate: 18,
+        demandLevel: "High",
+        topSkills: ["Adobe Premiere Pro", "After Effects", "Color Grading", "Motion Graphics", "Video Production"],
+        marketOutlook: "Positive",
+        keyTrends: ["4K/8K Content", "Social Media Video", "Live Streaming", "AI-Assisted Editing", "Remote Production"],
+        recommendedSkills: ["Video Editing Software", "Color Correction", "Audio Editing", "Motion Graphics", "Project Management"]
+      };
+    }
+    
     // Fallback data
     return {
       salaryRanges: [
