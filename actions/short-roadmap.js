@@ -14,9 +14,11 @@ export async function generateShortRoadmap(skill, experienceLevel = "beginner") 
   try {
     // Check if API key is available
     if (!process.env.GEMINI_API_KEY) {
+      console.log("❌ Gemini API key not found in environment variables");
       throw new Error("Gemini API key not configured. Please check your environment variables.");
     }
     
+    console.log("✅ Gemini API key found, generating roadmap for:", skill);
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     
     const prompt = `
@@ -70,10 +72,12 @@ export async function generateShortRoadmap(skill, experienceLevel = "beginner") 
     Use reliable resource types like articles, documentation, tools, books, and practice exercises.
     `;
 
+    console.log("🚀 Making API call to Gemini...");
     const result = await rateLimitedApiCall(async () => {
       return await model.generateContent(prompt);
-    }, 25000); // 25 second timeout
+    }, 45000); // 45 second timeout for complex roadmap generation
     
+    console.log("✅ API call successful, parsing response...");
     const response = await result.response;
     const text = response.text();
     

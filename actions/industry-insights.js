@@ -107,7 +107,7 @@ export async function generateIndustryInsights(industry) {
 
     const result = await rateLimitedApiCall(async () => {
       return await model.generateContent(prompt);
-    }, 25000); // 25 second timeout
+    }, 40000); // 40 second timeout for industry insights
     
     const response = await result.response;
     const text = response.text();
