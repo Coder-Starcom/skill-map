@@ -21,36 +21,33 @@ export async function generateShortRoadmap(skill, experienceLevel = "beginner") 
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     
     const prompt = `
-    Create a comprehensive learning roadmap for "${skill}" suitable for ${experienceLevel} level.
-    
-    Generate 30-40 practical, sequential steps that build upon each other.
+    Create a learning roadmap for "${skill}" (${experienceLevel} level) with 20-25 steps.
     
     Return JSON format:
     {
-      "name": "Comprehensive [Skill] Learning Path",
-      "description": "Detailed description of what this roadmap covers and its benefits",
-      "estimatedDuration": "X weeks",
-      "difficulty": "beginner|intermediate|advanced",
+      "name": "${skill} Learning Roadmap",
+      "description": "Practical learning path for ${skill}",
+      "estimatedDuration": "8-12 weeks",
+      "difficulty": "${experienceLevel}",
       "steps": [
         {
           "id": "step-1",
-          "title": "Clear, Actionable Step Title",
-          "description": "Detailed description of what to learn, practice, and accomplish in this step",
-          "duration": "X hours",
-          "type": "theory|practice|project|assessment",
+          "title": "Step Title",
+          "description": "What to learn in this step",
+          "duration": "2-3 hours",
+          "type": "theory",
           "resources": [
             {
-              "title": "Resource Title",
+              "title": "Resource Name",
               "url": "https://example.com",
-              "type": "article|documentation|tool|book|practice|course"
+              "type": "article"
             }
           ]
         }
       ]
     }
     
-    Make each step actionable and include diverse learning resources (articles, documentation, tools, books, practice exercises).
-    Avoid video links as they are often unavailable.
+    Keep it concise and practical.
     `;
 
     console.log("🚀 Making API call to Gemini (no restrictions)...");
