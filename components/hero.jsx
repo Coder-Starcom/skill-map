@@ -1,8 +1,6 @@
 "use client";
 
 import React from "react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 
 const HeroSection = () => {
   return (
@@ -18,18 +16,6 @@ const HeroSection = () => {
             Advance your career with personalized guidance, interview prep, and
             AI-powered tools for job success.
           </p>
-        </div>
-        <div className="flex justify-center space-x-4">
-          <Link href="/dashboard">
-            <Button size="lg" className="px-8">
-              Get Started
-            </Button>
-          </Link>
-          <Link href="https://www.youtube.com/roadsidecoder">
-            <Button size="lg" variant="outline" className="px-8">
-              Watch Demo
-            </Button>
-          </Link>
         </div>
       </div>
     </section>
