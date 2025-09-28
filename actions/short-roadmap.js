@@ -12,6 +12,11 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
  */
 export async function generateShortRoadmap(skill, experienceLevel = "beginner") {
   try {
+    // Check if API key is available
+    if (!process.env.GEMINI_API_KEY) {
+      throw new Error("Gemini API key not configured. Please check your environment variables.");
+    }
+    
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     
     const prompt = `
@@ -83,6 +88,15 @@ export async function generateShortRoadmap(skill, experienceLevel = "beginner") 
     
   } catch (error) {
     console.error("Error generating short roadmap:", error);
+    
+    // Provide more specific error messages
+    if (error.message.includes("API key")) {
+      throw new Error("Gemini API key is invalid or expired. Please check your environment variables.");
+    } else if (error.message.includes("quota")) {
+      throw new Error("API quota exceeded. Please try again later.");
+    } else if (error.message.includes("network")) {
+      throw new Error("Network error. Please check your internet connection and try again.");
+    }
     
     // Fallback roadmap data - generic structure that works for any skill
     return {
