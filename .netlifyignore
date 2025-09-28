@@ -6,3 +6,8 @@ GEMINI_API_KEY
 NEXT_PUBLIC_CLERK_SIGN_UP_URL
 ADZUNA_APP_KEY
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+
+# Ignore build files that may contain environment variables
+.netlify/
+.next/
+node_modules/
