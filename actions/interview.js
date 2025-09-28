@@ -67,8 +67,14 @@ export async function generateQuiz() {
 function getFallbackQuestions(industry, skills) {
   const industryLower = industry?.toLowerCase() || 'general';
   
-  if (industryLower.includes('technology') || industryLower.includes('software') || industryLower.includes('tech')) {
+  if (industryLower.includes('technology') || industryLower.includes('software') || industryLower.includes('tech') || industryLower.includes('sde') || industryLower.includes('developer') || industryLower.includes('engineering')) {
     return [
+      {
+        question: "What is the time complexity of binary search?",
+        options: ["O(n)", "O(log n)", "O(n²)", "O(1)"],
+        correctAnswer: "O(log n)",
+        explanation: "Binary search has O(log n) time complexity because it eliminates half of the search space in each iteration."
+      },
       {
         question: "What is the difference between a stack and a queue in data structures?",
         options: ["Stack is LIFO, Queue is FIFO", "Stack is FIFO, Queue is LIFO", "Both are the same", "Stack uses arrays, Queue uses linked lists"],
@@ -94,10 +100,34 @@ function getFallbackQuestions(industry, skills) {
         explanation: "Version control systems track changes in code, allowing multiple developers to collaborate and maintain code history."
       },
       {
-        question: "Which of the following is NOT a programming paradigm?",
-        options: ["Object-Oriented Programming", "Functional Programming", "Procedural Programming", "Database Programming"],
-        correctAnswer: "Database Programming",
-        explanation: "Database Programming is not a programming paradigm. The main paradigms are OOP, Functional, and Procedural programming."
+        question: "What is the difference between SQL and NoSQL databases?",
+        options: ["SQL is faster", "SQL is relational, NoSQL is non-relational", "NoSQL is older", "They are the same"],
+        correctAnswer: "SQL is relational, NoSQL is non-relational",
+        explanation: "SQL databases are relational with structured schemas, while NoSQL databases are non-relational and more flexible."
+      },
+      {
+        question: "What is the purpose of unit testing?",
+        options: ["To test the entire application", "To test individual components in isolation", "To test user interface", "To test database connections"],
+        correctAnswer: "To test individual components in isolation",
+        explanation: "Unit testing focuses on testing individual functions or methods in isolation to ensure they work correctly."
+      },
+      {
+        question: "What does REST stand for in RESTful APIs?",
+        options: ["Remote Execution System Technology", "Representational State Transfer", "Rapid Enterprise Software Testing", "Real-time Event Streaming Technology"],
+        correctAnswer: "Representational State Transfer",
+        explanation: "REST stands for Representational State Transfer, an architectural style for designing web services."
+      },
+      {
+        question: "What is the difference between frontend and backend development?",
+        options: ["Frontend is faster", "Frontend handles UI, Backend handles server logic", "Backend is easier", "They are the same"],
+        correctAnswer: "Frontend handles UI, Backend handles server logic",
+        explanation: "Frontend development focuses on user interface and client-side logic, while backend handles server-side logic and data processing."
+      },
+      {
+        question: "What is the purpose of Docker in software development?",
+        options: ["To write code", "To test applications", "To containerize applications for consistent deployment", "To design databases"],
+        correctAnswer: "To containerize applications for consistent deployment",
+        explanation: "Docker containerizes applications to ensure consistent deployment across different environments."
       }
     ];
   }
