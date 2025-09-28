@@ -19,6 +19,8 @@ export default function RootLayout({ children }) {
       appearance={{
         baseTheme: dark,
       }}
+      signInFallbackRedirectUrl="/my-profile"
+      signUpFallbackRedirectUrl="/my-profile"
     >
       <html lang="en" suppressHydrationWarning>
         <head>
