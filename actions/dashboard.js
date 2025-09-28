@@ -28,12 +28,33 @@ export const generateAIInsights = async (industry) => {
           Include at least 5 skills and trends.
         `;
 
-  const result = await model.generateContent(prompt);
-  const response = result.response;
-  const text = response.text();
-  const cleanedText = text.replace(/```(?:json)?\n?/g, "").trim();
+  try {
+    const result = await model.generateContent(prompt);
+    const response = result.response;
+    const text = response.text();
+    const cleanedText = text.replace(/```(?:json)?\n?/g, "").trim();
 
-  return JSON.parse(cleanedText);
+    return JSON.parse(cleanedText);
+  } catch (error) {
+    console.error("Error generating AI insights:", error);
+    
+    // Fallback data
+    return {
+      salaryRanges: [
+        { "role": "Entry Level", "min": 40000, "max": 60000, "median": 50000, "location": "US" },
+        { "role": "Mid Level", "min": 60000, "max": 90000, "median": 75000, "location": "US" },
+        { "role": "Senior Level", "min": 90000, "max": 130000, "median": 110000, "location": "US" },
+        { "role": "Lead/Manager", "min": 120000, "max": 180000, "median": 150000, "location": "US" },
+        { "role": "Director", "min": 150000, "max": 250000, "median": 200000, "location": "US" }
+      ],
+      growthRate: 12,
+      demandLevel: "High",
+      topSkills: ["Technical Skills", "Problem Solving", "Communication", "Leadership", "Adaptability"],
+      marketOutlook: "Positive",
+      keyTrends: ["Digital Transformation", "Remote Work", "AI Integration", "Sustainability", "Automation"],
+      recommendedSkills: ["Core Industry Skills", "Technology Proficiency", "Soft Skills", "Certifications", "Continuous Learning"]
+    };
+  }
 };
 
 export async function getIndustryInsights() {

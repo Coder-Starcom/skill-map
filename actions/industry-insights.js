@@ -12,6 +12,11 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
  */
 export async function generateIndustryInsights(industry) {
   try {
+    // Check if API key is available
+    if (!process.env.GEMINI_API_KEY) {
+      throw new Error("Gemini API key not configured. Please check your environment variables.");
+    }
+    
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     
     const prompt = `
@@ -102,7 +107,7 @@ export async function generateIndustryInsights(industry) {
 
     const result = await rateLimitedApiCall(async () => {
       return await model.generateContent(prompt);
-    });
+    }, 25000); // 25 second timeout
     
     const response = await result.response;
     const text = response.text();
@@ -118,6 +123,17 @@ export async function generateIndustryInsights(industry) {
     
   } catch (error) {
     console.error("Error generating industry insights:", error);
+    
+    // Provide more specific error messages
+    if (error.message.includes("API call timeout")) {
+      throw new Error("Industry insights generation timed out. Please try again.");
+    } else if (error.message.includes("API key")) {
+      throw new Error("Gemini API key is invalid or expired. Please check your environment variables.");
+    } else if (error.message.includes("quota")) {
+      throw new Error("API quota exceeded. Please try again later.");
+    } else if (error.message.includes("network")) {
+      throw new Error("Network error. Please check your internet connection and try again.");
+    }
     
     // Fallback insights data
     return {

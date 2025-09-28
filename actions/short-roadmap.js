@@ -72,7 +72,7 @@ export async function generateShortRoadmap(skill, experienceLevel = "beginner") 
 
     const result = await rateLimitedApiCall(async () => {
       return await model.generateContent(prompt);
-    });
+    }, 25000); // 25 second timeout
     
     const response = await result.response;
     const text = response.text();
@@ -90,7 +90,9 @@ export async function generateShortRoadmap(skill, experienceLevel = "beginner") 
     console.error("Error generating short roadmap:", error);
     
     // Provide more specific error messages
-    if (error.message.includes("API key")) {
+    if (error.message.includes("API call timeout")) {
+      throw new Error("Roadmap generation timed out. Please try again.");
+    } else if (error.message.includes("API key")) {
       throw new Error("Gemini API key is invalid or expired. Please check your environment variables.");
     } else if (error.message.includes("quota")) {
       throw new Error("API quota exceeded. Please try again later.");
