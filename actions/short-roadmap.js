@@ -22,28 +22,9 @@ export async function generateShortRoadmap(skill, experienceLevel = "beginner") 
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     
     const prompt = `
-    Create a comprehensive and practical learning roadmap for "${skill}" suitable for a ${experienceLevel} learner.
+    Create a learning roadmap for "${skill}" (${experienceLevel} level) with 30-35 steps.
     
-    IMPORTANT: This can be ANY skill - programming, design, marketing, cooking, photography, music, business, languages, etc.
-    Adapt the roadmap structure and content to fit the specific skill domain.
-    
-    Requirements:
-    - Generate exactly 30-40 steps (not more, not less)
-    - Each step should be practical, actionable, and progressive
-    - Include clear learning objectives and outcomes
-    - Focus on essential skills, knowledge, and practical application
-    - Make it sequential and build upon previous steps
-    - Include hands-on practice, projects, and real-world applications
-    - Provide diverse learning resources (articles, documentation, tools, books, practice exercises)
-    - AVOID video links as they are often unavailable or outdated
-    - Consider industry best practices and current trends for this skill
-    
-    For technical skills: Include coding exercises, projects, and tools
-    For creative skills: Include practice exercises, portfolio projects, and inspiration
-    For business skills: Include case studies, practical applications, and real scenarios
-    For soft skills: Include practice scenarios, exercises, and real-world applications
-    
-    Return the response as a JSON object with this exact structure:
+    Return JSON format:
     {
       "name": "Comprehensive [Skill] Learning Path",
       "description": "Detailed description of what this roadmap covers and its benefits",
@@ -67,15 +48,11 @@ export async function generateShortRoadmap(skill, experienceLevel = "beginner") 
       ]
     }
     
-    Make sure the JSON is valid, complete, and tailored specifically to "${skill}". 
-    Focus on creating a practical, achievable learning path that will genuinely help someone master this skill.
-    Use reliable resource types like articles, documentation, tools, books, and practice exercises.
+    Keep it practical and focused on ${skill}. Use reliable resources only.
     `;
 
     console.log("🚀 Making API call to Gemini...");
-    const result = await rateLimitedApiCall(async () => {
-      return await model.generateContent(prompt);
-    }, 45000); // 45 second timeout for complex roadmap generation
+    const result = await model.generateContent(prompt);
     
     console.log("✅ API call successful, parsing response...");
     const response = await result.response;

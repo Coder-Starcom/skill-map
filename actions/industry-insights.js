@@ -20,20 +20,7 @@ export async function generateIndustryInsights(industry) {
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     
     const prompt = `
-    Generate comprehensive industry insights for the "${industry}" industry.
-    
-    Create a detailed analysis including:
-    - Market trends and growth projections
-    - Key skills in demand with demand levels
-    - Top companies in the industry
-    - Salary ranges for different roles
-    - Key domains and specializations
-    - Career opportunities with required skills
-    - Challenges and opportunities
-    - Recommended certifications
-    - Future outlook and market statistics
-    
-    Return the response as a JSON object with this EXACT structure:
+    Generate industry insights for "${industry}" industry in this JSON format:
     {
       "industry": "${industry}",
       "title": "Comprehensive ${industry} Industry Analysis",
@@ -102,12 +89,10 @@ export async function generateIndustryInsights(industry) {
       }
     }
     
-    Make sure the JSON is valid, comprehensive, and includes realistic data for the "${industry}" industry.
+    Keep it concise but informative. Focus on key trends and data for ${industry}.
     `;
 
-    const result = await rateLimitedApiCall(async () => {
-      return await model.generateContent(prompt);
-    }, 40000); // 40 second timeout for industry insights
+    const result = await model.generateContent(prompt);
     
     const response = await result.response;
     const text = response.text();
